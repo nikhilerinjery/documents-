@@ -2,11 +2,6 @@
 
 This guide outlines the steps required to enable the Public API for version **2026.1** in the **Regression** and **QA** environments.
 
-## Prerequisites
-* Access to the `DO-5625-endpointservice` repository.
-* Permissions to run Jenkins jobs in the `Dev-Mumbai` view.
-* AWS Console access for API Gateway and ECS management.
-
 ---
 
 ## Step 1: Update Configuration Files
@@ -17,16 +12,24 @@ Navigate to the infrastructure-as-code directory for the target environment.
 Locate and update the following parameters:
 
 ```
-{
-        "ParameterKey": "VersionNumberWithOutPatch",
-        "ParameterValue": "2025.3.2"
-        "ParameterValue": "2026.1.0"
-    },
-    {
-        "ParameterKey": "nlbdomainname",
-        "ParameterValue": "2025-3-2-rbcloudapi-regresssion.redblacksoftware.com"
-        "ParameterValue": "2026-1-0-rbcloudapi-regression.redblacksoftware.com"
-    },
+        {
+                "ParameterKey": "VersionNumberWithOutPatch",
+                "ParameterValue": "2025.3.2"
+            },
+            {
+                "ParameterKey": "nlbdomainname",
+                "ParameterValue": "2025-3-2-rbcloudapi-regresssion.redblacksoftware.com"
+            },
+        change to
+        {
+                "ParameterKey": "VersionNumberWithOutPatch",
+                "ParameterValue": "2026.1.0"
+            },
+            {
+                "ParameterKey": "nlbdomainname",
+                "ParameterValue": "2026-1-0-rbcloudapi-regression.redblacksoftware.com"
+            },
+
 ```    
 ---
 
