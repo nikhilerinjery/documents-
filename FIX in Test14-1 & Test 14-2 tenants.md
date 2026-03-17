@@ -26,9 +26,9 @@ Locate the REDBLACK_FixConfiguration section and update the values as follows:
 After updating the JSON file, apply the CloudFormation template.
 
 Deployment Info
-Cluster: dev-mumbai-ecs-linux
+Cluster: ```dev-mumbai-ecs-linux```
 
-Service Name: rb-dev-mumbai-reg-fix-service
+Service Name: ```rb-dev-mumbai-reg-fix-service```
 
 ✅ Verification Steps
 Sometimes the CloudFormation change set may not visually update in the console immediately. Follow these steps to confirm:
