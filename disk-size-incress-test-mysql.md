@@ -10,7 +10,7 @@ Now, identify the partition you want to extend (usually the one with the drive l
 To ensure you are "appending" all available space, run this command (replace 0 and 2 with your actual Disk and Partition numbers):
 
 ```
-$MaxSize = (Get-PartitionSupportedSize -DiskNumber 0 -PartitionNumber 2).SizeMax
+$MaxSize = (Get-PartitionSupportedSize -DiskNumber 0 -PartitionNumber 1).SizeMax
 ```
 
 here my partitionnumber is 1
