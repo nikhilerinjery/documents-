@@ -1,6 +1,6 @@
 # Enable Public API in Regression
 
-This guide outlines the steps required to enable the Public API for version **2026.1** in the **Regression** and **QA** environments.
+## 2026.1 has been released to regression. Please make the public API changes to enable public API for 2026.1.
 
 ---
 
