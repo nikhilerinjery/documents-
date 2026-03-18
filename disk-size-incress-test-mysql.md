@@ -1,5 +1,5 @@
 ## First, confirm that the OS sees the  total disk size. Run:
-```First, confirm that the OS sees the 300 GiB total disk size. Run:```
+```Get-Disk:```
 
 ## Check the Partition
 Now, identify the partition you want to extend (usually the one with the drive letter C). Run:
