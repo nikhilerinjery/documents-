@@ -38,19 +38,19 @@ Run Image Builder pipeline to generate a new custom AMI.
 ### 3. Update All Dependent Files With New Custom AMI
 
 #### CloudFormation Files to Update
-
+```
 CloudFormation/Shared/Linux_ECS_Cluser_parameters.json
 CloudFormation/Staging/ECSCluster/Linux_2_ECS_Cluser_parameters.json
 CloudFormation/Staging/ECSCluster/Linux_ECS_Cluser_parameters.json
 CloudFormation/UAT/ECSCluster/Linux_2_ECS_Cluser_parameters.json
 CloudFormation/UAT/ECSCluster/Linux_ECS_Cluser_parameters.json
-
+```
 #### Terraform Files to Update
-
+```
 Terraform/staging/ec2-image-builder/amazon-linux-ecs-custom-image-cis-1/main.tf
 Terraform/staging/ec2-image-builder/jenkins-agent-linux-custom-image/main.tf
 Terraform/staging/ec2-image-builder/troubleshoot-linux-custom-image/main.tf
-
+```
 ---
 
 ---
@@ -80,14 +80,14 @@ Trigger Image Builder to produce a new Jenkins Agent AMI.
 
 ### 3. Update Terraform References
 
-
+```
 Terraform/shared/jenkins-linux-agent/main.tf
 Terraform/shared/jenkins-linux-agent-secondary/main.tf
 Terraform/staging/jenkins-linux-agent/main.tf
 Terraform/staging/jenkins-linux-agent-secondary/main.tf
 Terraform/uat/jenkins-linux-agent/main.tf
 Terraform/uat/jenkins-linux-agent-secondary/main.tf
-
+```
 ---
 
 ---
@@ -119,10 +119,10 @@ Trigger build → generates new FSx Cleanup image.
 
 ### 3. Update Terraform Files
 
-
+```
 Terraform/staging/fsx-cleanup-spot-agent/main.tf
 Terraform/uat/fsx-cleanup-spot-agent/main.tf
-
+```
 ---
 
 ---
@@ -150,8 +150,8 @@ Run Image Builder → get new AMI ID.
 
 ### 3. Update Terraform Files
 
-
+```
 Terraform/uat/troubleshoot_ec2_instance/main.tf
 Terraform/staging/troubleshoot_ec2_instance/main.tf
-
+```
 ---
