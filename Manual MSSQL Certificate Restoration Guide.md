@@ -17,7 +17,7 @@
 ### Step 1: Create the Master Key
 The Master Key must exist in the `master` database to protect the certificate you are about to import.
 
-```sql
+```
 USE master;
 GO
 
@@ -28,7 +28,7 @@ BEGIN
     CREATE MASTER KEY ENCRYPTION BY PASSWORD = 'xxxxxxxx';
 END
 GO
-
+```
 
 ### Step 2: Create the Certificate from Files
 This step imports the certificate and the private key so the server can decrypt databases encrypted with this specific cert.
@@ -37,7 +37,6 @@ This step imports the certificate and the private key so the server can decrypt 
 USE master;
 GO
 
--- Check if the certificate already exists
 IF NOT EXISTS (SELECT * FROM sys.certificates WHERE name = 'TDE_Cert_STG')
 BEGIN
     CREATE CERTIFICATE TDE_Cert_STG 
@@ -49,6 +48,7 @@ BEGIN
     );
 END
 GO
+
 ```
 
 ### Step 3: Verification
@@ -70,6 +70,7 @@ Check the Master Key
 SELECT is_master_key_encrypted_by_server 
 FROM sys.databases 
 WHERE name = 'master';
+
 ```
 
 
