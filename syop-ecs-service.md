@@ -1,101 +1,83 @@
-# Restarting a Service Container in Production: Step-by-Step Guide
+🚀 Service Container Restart Guide
+🌐 Production Environment | Jenkins + AWS ECS (Windows)
+This document provides a fail-safe, step-by-step procedure to restart service containers with minimal production impact.
 
-## 1. Access Jenkins Agent
-Before beginning, you must gather the necessary credentials and identifiers from the Production Workspace.
+📋 Phase 1: Preparation & Access
+Before touching the infrastructure, ensure you have the necessary "keys to the kingdom."
 
-Navigate to the Production Workspace.
+Navigate to: Production Workspace
 
-Retrieve Identifiers:
+Identify:
 
 Jenkins Instance ID
 
 Jenkins Windows Agent Instance ID
 
-Obtain Credentials:
+Credentials: Retrieve the Jenkins Agent Password.
 
-Jenkins Agent Password
+🖥️ Phase 2: Establish Connection
+All commands must be executed from the secure Jenkins Windows Agent.
 
-## 2. Connect to Jenkins Agent
-The restart commands must be executed from the designated jump box.
+Launch RDP: Open Remote Desktop Connection.
 
-Open Remote Desktop Connection (RDP).
+Authenticate: Log in to the Windows Agent using the credentials from Phase 1.
 
-Connect to the Jenkins Windows Agent using the credentials obtained in Step 1.
+Initialize: Open a PowerShell terminal as Administrator.
 
-Once the desktop loads, launch PowerShell.
+🔍 Phase 3: Cluster Discovery
+Identify your targets before execution.
 
-3. Identify API Container IP
-To interact with the cluster, you need a stable entry point.
+1. Identify API IP
+Locate and copy the IP address of an active API container.
 
-Select and note the IP address of an active API container.
+[!CAUTION]
+CRITICAL: Always use the API Container IP (not the Service IP) for management commands. This ensures cluster stability during the restart process.
 
-[!IMPORTANT]
-Note: Always use the API container IP instead of the service container IP for management commands to avoid unintended impact during service restarts.
+2. Verify Cluster Health
+Run the following command to check the current state:
 
-## 4. Check Cluster Status
-Verify the health and configuration of the cluster before proceeding.
-
-```
+PowerShell
 pbm <API_IP>:55190 cluster show
-```
-Expected Outcome:
+What to look for: A list of active clusters (typically ~6).
 
-Displays comprehensive cluster details.
+Note: If versions 3.1 and 3.2 are both running, you will see multiple cluster entries.
 
-Typical State: Usually lists active clusters (e.g., 6 running clusters).
+⚡ Phase 4: The Restart Execution
+This is the core action that triggers the service handoff.
 
-## 5. Restart the Service
-Trigger the service to leave the cluster, which initiates the restart logic.
+Run the leave command:
 
-```
+PowerShell
 pdm <API_IP>:55190 cluster leave -a akka.ssl.tcp://redblack@<SERVICE_IP>:55100
-```
+<API_IP>: The IP noted in Phase 3.
 
-<API_IP>: Replace with the API container IP noted in Step 3.
+<SERVICE_IP>: The IP of the service container you are restarting.
 
-<SERVICE_IP>: Replace with the IP of the specific service container requiring a restart.
+[!TIP]
+Patience is Key: The service may not bounce instantly. Wait at least 60 seconds before moving to manual intervention.
 
-Behavior:
+🛠️ Phase 5: Manual Task Management (If Required)
+If the cluster leave command doesn't trigger a restart, follow these steps to force a fresh task in AWS.
 
-The specified service will attempt to restart.
-
-Delay: If the service does not restart immediately, please wait for approximately 1 minute.
-
-## 6. Identify EC2 Instance
-If manual intervention is required, locate the underlying host.
-
+1. Identify the EC2 Host
 Copy the Service IP.
 
-Navigate to the EC2 Console.
-
-Search using the Service IP to identify the specific instance.
+Go to AWS EC2 Console → Search by IP.
 
 Copy the EC2 Instance ID.
 
-## 7. Locate Container Instance in ECS
-Map the EC2 host to the ECS logical container instance.
+2. Map to ECS Infrastructure
+Navigate to: ECS ➔ Clusters ➔ Production ECS Cluster (Windows).
 
-Navigate to: ECS → Clusters → Production ECS Cluster (Windows).
+Select the Infrastructure tab.
 
-Go to the Infrastructure section.
+Filter by your EC2 Instance ID to find the Container Instance ID.
 
-Search/Paste the EC2 Instance ID.
+3. Terminate the Task
+Go to the Tasks tab.
 
-Retrieve the corresponding Container Instance ID.
+Filter by the Container Instance ID.
 
-## 8. Stop the Service Task
-Manually stopping the task ensures ECS triggers a fresh deployment of the service.
+Locate the Service Task (ignore the API Task).
 
-Go to the Tasks section within the ECS cluster.
-
-Filter the list using the Container Instance ID.
-
-Identify the two tasks associated with the instance:
-
-API Task
-
-Service Task
-
-Select the Service Task.
-
-Click Stop.
+Select it and click 🔴 Stop.
