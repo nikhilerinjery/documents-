@@ -1,4 +1,4 @@
-🚀 Service Container Restart Guide
+# 🚀 Service Container Restart Guide
 🌐 Production Environment | Jenkins + AWS ECS (Windows)
 This document provides a fail-safe, step-by-step procedure to restart service containers with minimal production impact.
 
@@ -36,8 +36,9 @@ CRITICAL: Always use the API Container IP (not the Service IP) for management co
 ### 2. Verify Cluster Health
 Run the following command to check the current state:
 
-PowerShell
+```
 pbm <API_IP>:55190 cluster show
+```
 What to look for: A list of active clusters (typically ~6).
 
 Note: If versions 3.1 and 3.2 are both running, you will see multiple cluster entries.
@@ -47,8 +48,9 @@ This is the core action that triggers the service handoff within the Akka cluste
 
 Run the leave command:
 
-PowerShell
+```
 pdm <API_IP>:55190 cluster leave -a akka.ssl.tcp://redblack@<SERVICE_IP>:55100
+```
 <API_IP>: The IP noted in Phase 3.
 
 <SERVICE_IP>: The IP of the specific service container you are restarting.
